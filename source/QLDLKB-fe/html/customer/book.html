@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Đặt lịch khám</title>
+        <link rel="icon" href="../../images/tab_icon.png">
+        <meta name="Description" content="Phùng Tín Phong - N19DCCN139">
+        <!-- Font Awesoeme Stylesheet CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+        <!-- Google web Font -->
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,500">
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="../../css/customer/bootstrap.min.css">
+        <!-- Material Design Lite Stylesheet CSS -->
+        <link rel="stylesheet" href="../../css/customer/material.min.css" />
+        <!-- Material Design Select Field Stylesheet CSS -->
+        <link rel="stylesheet" href="../../css/customer/mdl-selectfield.min.css">
+        <!-- Owl Carousel Stylesheet CSS -->
+        <link rel="stylesheet" href="../../css/customer/owl.carousel.min.css" />
+        <!-- Animate Stylesheet CSS -->
+        <link rel="stylesheet" href="../../css/customer/animate.min.css" />
+        <!-- Magnific Popup Stylesheet CSS -->
+        <link rel="stylesheet" href="../../css/customer/magnific-popup.css" />
+        <!-- Flex Slider Stylesheet CSS -->
+        <link rel="stylesheet" href="../../css/customer/flexslider.css" />
+        <!-- Custom Main Stylesheet CSS -->
+        <link rel="stylesheet" href="../../css/customer/style.css">
+        <!-- Customer CSS -->
+        <link rel="stylesheet" href="../../css/customer/style.css">
+        <link rel="stylesheet" href="../../css/notification.css">
+    </head>
+    <body onload="init()">
+        <div id="overlay" style="display:none"></div>
+        <div id="error-notification" class="toast toast--red" style="display:none">
+            <div class="toast__icon">
+                <svg class="toast__svg" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                    <g>
+                        <g>
+                            <path d="M504.502,75.496c-9.997-9.998-26.205-9.998-36.204,0L161.594,382.203L43.702,264.311c-9.997-9.998-26.205-9.997-36.204,0    c-9.998,9.997-9.998,26.205,0,36.203l135.994,135.992c9.994,9.997,26.214,9.99,36.204,0L504.502,111.7    C514.5,101.703,514.499,85.494,504.502,75.496z"></path>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+            <div class="toast__content">
+                <p class="toast__type">Đã xảy ra lỗi</p>
+                <p id="error-message" class="toast__message"></p>
+            </div>
+        </div>
+        <div id="hdr-wrapper">
+            <div class="layer-stretch hdr">
+                <div class="tbl">
+                    <div class="tbl-row">
+                        <div class="tbl-cell hdr-menu">
+                            <ul class="menu">
+                                <li>
+                                    <a id="manage" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                                        Quản lý <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="menu-dropdown">
+                                        <li><a href="../index.html">Đăng nhập</a></li>
+                                        <li><a href="sign-up.html">Đăng ký</a></li>
+                                        <li><a href="book.html">Đặt khám</a></li>
+                                        <li><a href="appointment.html">Theo dõi</a></li>
+                                        <li><a href="contact.html">Liên hệ</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a id="category" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                                        Danh mục <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="menu-dropdown">
+                                        <li><a href="department.html">Khoa</a></li>
+                                        <li><a href="doctor.html">Bác sĩ</a></li>
+                                        <li><a href="package.html">Gói khám</a></li>
+                                        <li><a href="disease.html">Triệu chứng bệnh</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a id="profile" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                                        Cá nhân <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="menu-dropdown">
+                                        <li><a href="profile.html">Thông tin cá nhân</a></li>
+                                        <li><a href="change-password.html">Đổi mật khẩu</a></li>
+                                        <li><a href="forgot-password.html">Quên mật khẩu</a></li>
+                                        <li><a onclick="logOut()">Đăng xuất</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div id="menu-bar"><a><i class="fa fa-bars"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-ttl">
+            <div class="layer-stretch">
+                <div class="page-ttl-container">
+                    <h1>ĐẶT LỊCH KHÁM MỚI</h1>
+                    <p><a href="../index.html">Trang chủ</a> &#8594; <span>Bạn vào xem các lịch khám hôm nay nhé</span></p>
+                </div>
+            </div>
+        </div>
+        <div style="display:flex">
+            <p style="margin-left:15px; text-align:center; margin-top:5px">
+                <label>Từ ngày:</label>
+            </p>
+            <div>
+                <p style="margin-left:5px; margin-top:5px">
+                    <select id="from-date-filter" style="padding:3px; font-weight:bold; color:#337ab7; border-bottom:1px solid #999" onchange="filter()"></select>
+                </p>
+            </div>
+            <p style="margin-left:15px; text-align:center; margin-top:5px">
+                <label>Đến ngày:</label>
+            </p>
+            <p style="margin-left:5px; margin-top:5px">
+                <select id="to-date-filter" style="padding:3px; font-weight:bold; color:#337ab7; border-bottom:1px solid #999" onchange="filter()"></select>
+            </p>
+            <p style="margin-left:15px; text-align:center; margin-top:5px">
+                <label>Khoa:</label>
+            </p>
+            <p style="margin-left:5px; margin-top:5px">
+                <select id="department-filter" style="padding:3px; font-weight:bold; color:#337ab7; border-bottom:1px solid #999" onchange="filter()">
+                    <option value="-1" selected>(Tất cả)</option>
+                </select>
+            </p>
+        </div>
+        <div id="to-date-alert" style="display:none; margin-left:20px; text-align:start; font-size:12px; color:#ff0000"></div>
+        <div class="theme-material-card">
+            <p class="font-16">Lịch khám dành cho bạn</p>
+            <div style="height:300px; overflow:scroll; overflow-x:auto">
+                <table id="schedule-table" class="table table-hover">
+                    <thead style="position:sticky; top:0">
+                        <tr>
+                            <th style="background-color:#f7b367; color:#000000">STT</th>
+                            <th style="background-color:#f7be6d; color:#000000">Bác sĩ</th>
+                            <th style="background-color:#f7b367; color:#000000">Chuyên khoa</th>
+                            <th style="background-color:#f7be6d; color:#000000">Ngày khám</th>
+                            <th style="background-color:#f7b367; color:#000000">Bắt đầu khám</th>
+                            <th style="background-color:#f7be6d; color:#000000">Địa chỉ khám</th>
+                            <th style="background-color:#f7b367; color:#000000">Còn lại</th>
+                            <th style="background-color:#f7be6d; color:#000000">Đặt</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <div id="appointment" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h5 class="modal-title">Điền đầy đủ và kiểm tra kỹ thông tin đặt lịch khám</h5>
+                        <button id="appointment-close" type="button" class="close" data-dismiss="modal" onclick="hideAppointmentDialog()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="appointment-error"></div>
+                        <div class="col">
+                            <div class="col-md-6">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+                                    <i class="fa fa-user-o"></i>
+                                    <input id="patient-name" class="mdl-textfield__input" type="text" style="color:#000000" disabled placeholder="Họ tên khách hàng">
+                                    <div id="patient-name-alert" style="display:none; text-align:end; font-size:12px; color:#ff0000"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label form-input-icon">
+                                    <i class="fa fa-dollar"></i>
+                                    <select id="packages" class="mdl-selectfield__select" style="color:#727373" onchange="changePackageColor()">
+                                        <option value="-1" style="color:#727373" selected disabled>Gói khám</option>
+                                    </select>
+                                    <div id="packages-alert" style="display:none; text-align:end; font-size:12px; color:#ff0000"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label form-input-icon">
+                                    <i class="fa fa-heartbeat"></i>
+                                    <select id="disease" class="mdl-selectfield__select" style="color:#727373" onchange="changeDiseaseColor()">
+                                        <option value="-1" style="color:#727373" selected disabled>Loại bệnh có thể mắc phải</option>
+                                    </select>
+                                    <div id="disease-alert" style="display:none; text-align:end; font-size:12px; color:#ff0000"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+                                    <i class="fa fa-user-o"></i>
+                                    <textarea id="description" class="mdl-textfield__input" type="text" maxlength="500" placeholder="Mô tả triệu chứng bệnh cho bác sĩ" style="height:130px"></textarea>
+                                    <div id="description-alert" style="display:none; text-align:end; font-size:12px; color:#ff0000"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center pt-4">
+                            <button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-primary button-lg make-appointment" onclick="checkAndUpdate()">
+                                ĐẶT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+            <ul class="social-list notfound-social" style="display: flex; justify-content: center; background-color:#015259">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-google"></i></a></li>
+                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa fa-flickr"></i></a></li>
+                <li><a href="#"><i class="fa fa-rss"></i></a></li>
+            </ul>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+        <script src="../../js/customer/book.js" type="text/javascript"></script>
+    </body>
+</html>
